@@ -1,0 +1,24 @@
+Docker Image
+Docker Registry
+Docker Container
+
+CNCF Cloud Nativve Computing Foundation
+
+OCI Registry (Universal Distribution)
+Package?
+Image registry
+
+Docker Engine
+
+Build -> Ship -> Run
+
+
+Jaman dulu ada Virtual Machine Manager / Hypervisor:
+VM Ware, Virtual Box
+
+Mirantis Container Runtime (MCR)
+
+wsl --update
+Docker Client dan Docker Server
+
+Docker Server == Docker_Host == Docker_Daemon
