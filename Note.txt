@@ -1,24 +1,45 @@
-Docker Image
-Docker Registry
-Docker Container
+Jaman dulu ada Virtual Machine Manager / Hypervisor:
+Contoh Product: VM Ware, Virtual Box
 
-CNCF Cloud Nativve Computing Foundation
+Virtualization digunakan untuk seperate deployment dan implementation supaya semua gak campur jadi satu,
+tapi dengan cost setiap Virtual Machine harus ada OS masing2 yang membuat server jadi berat.
+
+WSL (Windows Subsystem for Linux): Cara running Linux Kernel di windows
+wsl --update
+
+Kernel ada core dari OS, yang langsung bersentuhan dengan Hardware dan App.
+Compatibility App semua dikarenakan kernelnya.
+
+Di containerization, sangat memungkinkan:
+Di server windows (sudah ada windows kernel) -> jalankan container windows
+Di server windows -> jalankan linux kernel -> jalankan container linux
+Di server linux (sudah ada linux kernel) -> jalankan container linux
+Kernel dan container harus sama.
+
+Docker Client:
+	Docker Command dan Docker Desktop
+
+Docker Server / Docker_Host / Docker_Daemon
+	Docker Image
+	Docker Container
+
+Docker Registry(Image registry)
+
+Kalau mau install docker desktop di Fedora, pastikan:
+1. Install GNOME terminal
+2. Sudah install KVM (Kernel Virtual machine)
+3. Install Docker Engine
+2. Sudah install GPG key management store
+
+============ Research List =======================
+
+CNCF Cloud Native Computing Foundation ?
 
 OCI Registry (Universal Distribution)
 Package?
-Image registry
 
 Docker Engine
 
 Build -> Ship -> Run
 
-
-Jaman dulu ada Virtual Machine Manager / Hypervisor:
-VM Ware, Virtual Box
-
 Mirantis Container Runtime (MCR)
-
-wsl --update
-Docker Client dan Docker Server
-
-Docker Server == Docker_Host == Docker_Daemon
