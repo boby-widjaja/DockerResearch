@@ -166,6 +166,8 @@ docker container create
 
 jadi koneksi ke mongo adalah mongo:27017 dan ke redis adalah redis:6379
 
+==================================== Network and Compose ==========================================
+
 Tapi antar container belum bisa berkomunikasi satu sama lain, terkecuali kita kelompokan mereka ke dalam network yang sama.
 
 Melihat ada commands apa saja pada network:
@@ -185,6 +187,60 @@ Setelah itu, network bisa di check lewat inspect command, dan hasilnya:
 "Networks": {
     "golang_network": {...}
 }
+
+Docker Compose adalah satu set konfigurasi untuk automasi container dan network.
+Karena membuatnya satu-persatu akan repot, ada kemungkinan salah dan memakan waktu.
+
+check docker compose version yang ada di system:
+docker compose version
+
+untuk check setiap perintah di docker compose:
+docker compose
+atau
+docker compose --help
+
+untuk me-running semua (Create dan start containers)
+docker compose up
+docker compose up -d (dettached mode)
+	detatched mode akan menjalankan compose di belakang layar jadi kita gak perlu nungguin terminalnya.
+
+Hati-hati menggunakan down, terutama dengan container database, karena akan menghapus total
+docker compose down
+
+Lebih aman stop containernya daripada down, karena tidak menghapus
+docker compose stop
+
+untuk memulai yang di stop bisa menggunakan
+docker compose start
+
+====================================== Volume ====================================================
+
+Volum adalah solusi untuk membuat persistent data yang bersifat STATEFUL untuk database, sehingga
+permanent data tidak akan hilang ketika container di stop atau di remove
+
+Melihat semua perintah volume
+docker volume --help
+
+Membuat volume baru
+docker volume create mongo_data
+
+Set volume ke path dari databasenya
+docker container create --name mongoserver1 -p 27017:27017 
+	-v mongo_data:/data/db 
+	mongo:latest
+
+-v untuk volume dan :/data/db adalah lokasi pathnya, ini harus di selidiki di setiap DBMS
+
+Volume totaly di manage sama Docker dan kita gak bisa lihat langsung isinya.
+Tapi Bind Mounts bisa.
+
+Contoh bind mounts:
+docker container create --name mongoserver1 -p 27017:27017 
+	-v /Users/Boby/Desktop/MyData:/data/db 
+	mongo:latest
+
+/Users/Boby/Desktop/MyData adalah absolute path HDD saya.
+Posisinya persis menggantikan nama volume
 
 ===================================== Linux Bash Command ===========================================
 
@@ -224,15 +280,10 @@ OCI Registry (Universal Distribution)
 Package?
 
 Docker Engine
-
 Build -> Ship -> Run
-
 Mirantis Container Runtime (MCR)
-
 fault isolation (isolasi kegagalan)
-
 Auto-restart (Kubernetes: jauh lebih canggih (self-healing))
-
 Health check (Sistem tahu service sehat atau tidak)
-
 Redundancy (replica) Jalankan beberapa container
+Cari tau soal Backup, restore, migrate data volumes
