@@ -58,6 +58,7 @@ Satu file, tapi punya dua nama.
 
 Nge-check docker image:
 docker images
+docker image ls
 
 contoh narik images dari dockerhub:
 docker pull mongo:latest
@@ -241,6 +242,78 @@ docker container create --name mongoserver1 -p 27017:27017
 
 /Users/Boby/Desktop/MyData adalah absolute path HDD saya.
 Posisinya persis menggantikan nama volume
+
+===================================== Masuk Container =============================================
+
+Kita bisa masuk ke dalam container untuk menjalankan sesuatu,
+contoh saja dibawah ini menjalankan redis dari dalam container:
+docker exec -t -i redisserver1 /bin/bash
+
+Setelah itu kita bisa explore directorynya juga.
+
+Berikut ini contoh menjalankan CLI executable file nya jika memang ada.
+root@692129a4cf06:/usr/local/bin# ls
+docker-entrypoint.sh  redis-benchmark  redis-check-aof	redis-check-rdb  redis-cli  redis-sentinel  redis-server
+root@692129a4cf06:/usr/local/bin# type redis-cli
+redis-cli is /usr/local/bin/redis-cli
+root@692129a4cf06:/usr/local/bin# redis-cli
+127.0.0.1:6379> get boby
+(nil)
+127.0.0.1:6379> set boby OhmBob
+OK
+127.0.0.1:6379> get boby
+"OhmBob"
+127.0.0.1:6379> exit
+root@692129a4cf06:/usr/local/bin# 
+
+===================================== Membersihkan sampah ==========================================
+
+Melisting seluruh images, containers volumes dan cache yang terdapat di system:
+docker system df
+
+Menghapus semua container yang tidak dijalankan
+docker container prune
+
+Menghapus semua network yang tak terpakai
+docker network prune
+
+Menghapus seluruh volume yang tidak terpakai
+docker volume prune
+
+untuk menghapus dangling image:
+docker image prune
+
+(Dangling image artinya bukan image yang tidak ada containernya (unused image), dangling image artinya image
+dia unused dan tidak memiliki nama dan tag. <none>:<none>)
+
+untuk menghapus image yang unused atau tidak terpakai:
+docker image prune -a
+
+untuk menghapus banyak hal:
+docker system prune
+
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all dangling images
+  - unused build cache
+
+docker system prune -a
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all images without at least one container associated to them
+  - all build cache
+
+docker system prune -a --volumes
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all anonymous volumes not used by at least one container
+  - all images without at least one container associated to them
+  - all build cache
+
+(Note: Hati-hati penghapus volumes karena ada database di sana)
 
 ===================================== Linux Bash Command ===========================================
 
