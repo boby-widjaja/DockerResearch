@@ -1,0 +1,13 @@
+9. Archieving to MongoDb
+10. Purchasing calculator
+14. Implementasi Selected Origin White List
+23. Implementasi HTTPS
+28. Perbaikan responsive di diagram dan login
+32. Kurang validasi salesman dan region assignment
+33. Kurang validasi superior
+34. Butuh implementasi Canonical?
+35. Anti injection sanitizer
+39. Lengkapi bi-directional entity
+41. Penambahan dialog
+42. Global Test
+43. Unit Testing and Integration Testing

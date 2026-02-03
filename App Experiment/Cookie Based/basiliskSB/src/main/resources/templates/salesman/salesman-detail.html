@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="grid-container salesman-detail">
+			<section class="header-info" th:object="${parent}">
+		        <div>Employee Number: <span th:text="*{employeeNumber}"></span></div>
+		        <div>Full Name: <span th:text=${headerFullName}></span></div>
+		    </section>
+		    <form method="get" class="filter" th:action="@{/salesman/detail}">
+		    	<input type="hidden" name="employeeNumber" th:attr="value=${parentId}">
+		        <input type="text" name="city" placeholder="Region Name..." th:attr="value=${city}">
+		        <button class="blue-button" type="submit">Search</button>
+		    </form>
+		    <a class="blue-button create-button" 
+		    	th:href="@{/salesman/assignDetailForm(employeeNumber=${parentId})}">Assign New Region</a>
+			<table>
+				<th:block th:replace="~{layout :: tableHeader (${tableHeaders})}"></th:block>
+		        <tbody> 			
+					<tr th:each="row : ${grid}" th:object="${row}">
+						<td>
+							<a th:href="@{/salesman/deleteDetail(employeeNumber=${parentId},regionId=*{id})}"
+								class="blue-button delete-button">Delete</a>
+						</td>
+						<td th:text="*{city}"></td>
+						<td th:text="*{remark}"></td>
+					</tr>
+				</tbody>
+				<th:block th:replace="~{layout :: tableFooter (${columnSpan}, ${currentPage}, ${totalPages}, ${pageActionUrl}, ${pageUrlParameters})}"></th:block>
+			</table>
+		</div>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

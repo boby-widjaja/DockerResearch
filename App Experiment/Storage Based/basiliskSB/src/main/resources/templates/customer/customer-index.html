@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="grid-container customer-index">
+		    <form method="get" class="filter" th:action="@{/customer/index}">
+		        <input type="text" name="company" placeholder="Company Name..." th:attr="value=${company}">
+		        <input type="text" name="contact" placeholder="Contact Name..." th:attr="value=${contact}">
+		        <button class="blue-button" type="submit">Search</button>
+		    </form>
+		    <a class="blue-button create-button" th:href="@{/customer/upsertForm}">Insert New Customer</a>
+			<table>
+				<th:block th:replace="~{layout :: tableHeader (${tableHeaders})}"></th:block>
+				<tbody>
+					<tr th:each="row: ${grid}" th:object="${row}">
+						<td>
+							<a th:href="@{/customer/upsertForm(id=*{id})}" class="blue-button update-button">Edit</a>
+							<a th:href="@{/customer/delete(id=*{id})}" class="blue-button delete-button">Delete</a>
+						</td>
+						<td th:text="*{companyName}"></td>
+						<td th:text="*{contactPerson}"></td>
+						<td th:text="*{address}"></td>
+						<td th:text="*{city}"></td>
+					</tr>				
+				</tbody>
+				<th:block th:replace="~{layout :: tableFooter (${columnSpan}, ${currentPage}, ${totalPages}, ${pageActionUrl}, ${pageUrlParameters})}"></th:block>
+			</table>
+		</div>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

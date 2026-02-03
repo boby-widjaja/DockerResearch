@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<form method="post" class="upsert-form" th:action="@{/category/upsert}" th:object="${dto}">
+			<input type="hidden" th:field="*{id}"/>
+			<table>
+				<tbody>
+					<tr>
+		                <td><label>Category Name*</label></td>
+		                <td>
+		                	<input type="text" th:field="*{name}">
+		                	<div class="field-validation-error" th:errors="*{name}"></div>
+		                	<div class="field-validation-error" th:errors="${dto}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td class="textarea-label"><label>Category Description</label></td>
+		                <td>
+		                	<textarea th:field="*{description}"></textarea>
+		                	<div class="field-validation-error" th:errors="*{description}"></div>
+		                </td>
+		            </tr>
+				</tbody>
+			</table>
+		    <button class="blue-button" type="submit" th:text="${type} + ' Category'"></button>
+		</form>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

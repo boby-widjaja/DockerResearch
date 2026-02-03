@@ -1,0 +1,15 @@
+<template>
+    <div class="base-tile-container">
+        <slot></slot>
+    </div>
+</template>
+
+<style coped>
+.base-tile-container{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 320px);
+    margin-top:12px;
+}
+</style>

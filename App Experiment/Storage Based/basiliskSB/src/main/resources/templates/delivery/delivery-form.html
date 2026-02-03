@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<form method="post" class="upsert-form" th:action="@{/delivery/upsert}" th:object="${dto}">
+			<input type="hidden" th:field="*{id}"/>
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><label>Delivery's Company*</label></td>
+		                <td>
+		                    <input type="text" th:field="*{companyName}">
+		                	<div class="field-validation-error" th:errors="*{companyName}"></div>
+							<div class="field-validation-error" th:errors="${dto}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Company's Phone</label></td>
+		                <td>
+		                    <input type="tel" th:field="*{phone}">
+		                	<div class="field-validation-error" th:errors="*{phone}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Cost Per Delivery (Rp.)</label></td>
+		                <td>
+		                    <input type="text" class="moneyConversion" th:field="*{cost}">
+		                	<div class="field-validation-error" th:errors="*{cost}"></div>
+		                </td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    <button class="blue-button" type="submit" th:text="${type} + ' Delivery'"></button>
+		</form>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

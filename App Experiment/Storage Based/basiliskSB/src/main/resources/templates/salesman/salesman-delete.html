@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="fail-container">
+		    <p>There is/are <span th:text="${dependentOrders}"></span> order(s) found which are processed by this salesman.</p>
+		    <p>Or there is/are <span th:text=${dependentSubordinates}></span> subordinate(s) found which are tied to this salesman.</p>
+		    <p>You can't delete this salesman while those order(s) or subordinate(s) are dependent to this salesman.</p>
+		</div>
+		<a class="blue-button" th:href="@{/salesman/index}">back to index</a>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

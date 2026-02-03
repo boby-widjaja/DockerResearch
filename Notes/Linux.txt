@@ -1,0 +1,28 @@
+===================================== Linux Bash Command ===========================================
+
+sudo dnf update
+
+Fedora’s package manager (dnf) talks to online repositories and downloads:
+
+✔ list of available packages
+✔ their versions
+✔ dependencies
+✔ security updates
+✔ checksums & signatures
+
+This information is called repository metadata.
+
+It is basically:
+a local database of what software exists and what versions are available.
+Why it matters before installing software
+Without fresh metadata:
+your system may not see new packages
+may install outdated versions
+may fail dependency resolution
+may miss security fixes
+Updating metadata ensures:
+
+✅ you install the latest compatible software
+✅ dependency graph is correct
+✅ fewer errors
+------------------------------------------------------------------------

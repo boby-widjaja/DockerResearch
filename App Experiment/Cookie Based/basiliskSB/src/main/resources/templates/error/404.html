@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+    <header th:replace="~{layout :: account-header}"></header>
+    <main>
+        <h1>404 Page Not Found</h1>
+        <p>
+            The page you are looking for is not exist.
+            Make sure you type the correct URL in your browser.
+        </p>
+        <div class="link-container">
+            <a th:href="@{/}">Click here to back to the landing page</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

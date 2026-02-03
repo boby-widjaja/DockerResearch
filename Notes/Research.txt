@@ -1,0 +1,53 @@
+
+============================================ Research List ===============================================
+
+CNCF Cloud Native Computing Foundation ?
+
+OCI Registry (Universal Distribution)
+Package?
+
+Docker Engine
+Build -> Ship -> Run
+Mirantis Container Runtime (MCR)
+fault isolation (isolasi kegagalan)
+Auto-restart (Kubernetes: jauh lebih canggih (self-healing))
+Health check (Sistem tahu service sehat atau tidak)
+Redundancy (replica) Jalankan beberapa container
+Cari tau soal Backup, restore, migrate data volumes
+
+What is Swarm?
+Docker Swarm adalah sistem orchestration bawaan Docker
+untuk mengelola banyak container di banyak server sebagai satu cluster.
+
+📦 Masalah yang diselesaikan Swarm
+
+Tanpa orchestration:
+
+• kamu start container satu per satu
+• kalau server mati → container mati
+• scaling manual
+• networking ribet
+
+Dengan Swarm:
+
+✔ auto scheduling
+✔ auto restart
+✔ load balancing built-in
+✔ scaling dengan 1 command
+✔ service discovery
+
+Software Bill Of Materials (SBOM)???
+
+docker buildx?
+docker context?
+docker debug?
+docker extension?
+docker init?
+docker manifest?
+docker mcp?
+docker model?
+docker offload?
+docker plugin?
+docker sandbox?
+docker sbom?
+docker scout?

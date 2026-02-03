@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<form method="post" class="upsert-form" th:action="@{/order/upsertDetail}" th:object="${dto}">
+			<input type="hidden" th:field="*{invoiceNumber}"/>
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><label>Product*</label></td>
+		                <td>
+							<th:block th:if="*{productId != null}">
+								<input type="hidden" th:field="*{productId}">
+								<span th:text="*{productName}"></span>
+							</th:block>
+					        <select th:if="*{productId == null}" th:field="*{productId}">
+					        	<option th:value=null>No Specific Product</option>
+							    <option th:each="option : ${productDropdown}" th:value="${option.value}"
+							    	th:text="${option.text}" th:selected="${option.value == productId}"/>
+					        </select>
+		                    <div class="field-validation-error" th:errors="*{productId}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Quantity*</label></td>
+		                <td>
+		                    <input type="number" min="0" th:field="*{quantity}">
+		                	<div class="field-validation-error" th:errors="*{quantity}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Discount(%)*</label></td>
+		                <td>
+		                    <input type="text" class="moneyConversion" th:field="*{discount}">
+		                	<div class="field-validation-error" th:errors="*{discount}"></div>
+		                </td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    <button class="blue-button" type="submit" th:text="${type} + ' Order Detail'"></button>
+		</form>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

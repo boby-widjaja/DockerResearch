@@ -1,0 +1,139 @@
+===========================  Theory  =================================
+
+Jaman dulu ada Virtual Machine Manager / Hypervisor
+
+Native Hypervisor: Di instal langsung di atas hardware.
+Contoh: VMware ESXi, Microsoft Hyper-V (Server mode), Xen, KVM (di Linux server)
+
+Hosted Hypervisor: Di install diatas OS lain.
+VirtualBox, VMware Workstation/Player, Parallels Desktop (Mac), Qemu
+
+
+Infrastructure / Platform Implementers & Operators Job Title:
+
+System Admin (Sys Admin)
+Tech:
+-Bare-metal servers
+-Virtual Machines (Hypervisor)
+-Physical networking
+-Manual provisioning
+-Container hampir tidak digunakan.
+Responsibilities:
+-Install OS
+-Configure server
+-Patch & update
+-User management
+-Backup & recovery
+-Uptime & hardware health
+-Fokus stability & availability
+Skill set:
+-Linux/Windows internals
+-Networking (TCP/IP, DNS)
+-Storage
+-Hypervisor (VMware, Hyper-V)
+-Bash scripting
+
+System Operations (Sys Ops)
+Tech:
+-Virtual Machines (still dominant)
+-Hypervisor
+-Early automation (Ansible, Puppet)
+-Cloud IaaS (EC2, GCE)
+-Containers mulai muncul tapi belum utama.
+Responsibilities:
+-Automate server provisioning
+-Monitor systems
+-Capacity planning
+-Incident response
+-Fokus:operational efficiency
+Skill set tambahan:
+-Automation tools
+-Monitoring (Nagios, Zabbix)
+-Cloud basics
+-Scripting lebih kuat
+
+Development and Operations (Dev Ops)
+Tech:
+-Containers (Docker)
+-Container orchestration (K8s)
+-CI/CD pipelines
+-Cloud managed services
+-Hypervisor masih ada, tapi di layer bawah (cloud provider).
+Responsibilities:
+-Build deployment pipelines
+-Infrastructure as Code
+-Collaboration Dev + Ops
+-Release automation
+-Scalability
+-Fokus delivery speed + reliability
+Skill set:
+-Docker, Kubernetes
+-CI/CD
+-Git workflows
+-Cloud services
+-Observability
+
+Development, Security and Operations (Dev Sec Ops)
+Tech:
+-Everything in DevOps
+-Image scanning
+-Secret management
+-Policy enforcement
+-Zero Trust
+Responsibilities:
+-Shift-left security
+-Secure pipelines
+-Compliance automation
+-Threat modeling
+-Fokus: secure by default
+
+Virtualization digunakan untuk seperate deployment dan implementation supaya semua gak campur jadi satu,
+tapi dengan cost setiap Virtual Machine harus ada OS masing2 yang membuat server jadi berat.
+
+WSL (Windows Subsystem for Linux): Cara running Linux Kernel di windows
+wsl --update
+
+Kernel ada core dari OS, yang langsung bersentuhan dengan Hardware dan App.
+Compatibility App semua dikarenakan kernelnya.
+
+Di containerization, sangat memungkinkan:
+Di server windows (sudah ada windows kernel) -> jalankan container windows
+Di server windows -> jalankan linux kernel -> jalankan container linux
+Di server linux (sudah ada linux kernel) -> jalankan container linux
+Kernel dan container harus sama.
+
+Docker Client:
+	Docker Command dan Docker Desktop
+
+Docker Server / Docker_Host / Docker_Daemon
+	Docker Image / Package : paket aplikasi siap jalan (dependency, library, konfigurasi)
+	Docker Container: Container ada images yang dirun. (Hasil instantiate dari image, bisa dalam keadaan diam juga)
+		Bisa jadi 1 image di run beberapa kali sehingga menghasilkan lebih dari 1 containers.
+
+Docker Registry (Image registry)
+
+Kalau mau install docker desktop di Fedora, pastikan:
+1. Install GNOME terminal
+2. Sudah install KVM (Kernel Virtual machine)
+3. Install Docker Engine
+2. Sudah install GPG key management store
+
+In real-world Docker/DevOps practice: the application and the database run in separate containers, built from different images.
+Putting both in one container is technically possible, but considered bad design.
+
+Docker follows this rule:
+One container = one main responsibility (one process/service).
+
+So typically:
+One container → your backend app (Spring Boot, Node, etc.)
+One container → database (MongoDB, MySQL, PostgreSQL, etc.)
+They communicate over a virtual network.
+
+Ketika membuat tag pada image:
+image tidak benar-benar “diduplikasi”
+Docker tidak membuat image baru secara fisik.
+
+Yang dibuat hanyalah:
+👉 pointer (label) baru ke image yang sama di disk.
+Ibarat:
+Satu file, tapi punya dua nama.

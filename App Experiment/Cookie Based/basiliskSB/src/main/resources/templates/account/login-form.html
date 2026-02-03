@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="authentication-body">
+    <div class="authentication-wrapper">
+        <header th:replace="~{layout :: account-header}"></header>
+        <main>
+			<h1>Sign In</h1>
+			<form method="post" th:action="@{/authenticating}">
+				<input type="text" name="username" placeholder="username" autocomplete="off"/>
+				<input type="password" name="password" placeholder="password"/>
+				<div class="remember-me-container">
+					<input type="checkbox" name="remember-me">
+					<label>Remember Me</label>
+				</div>
+				<button type="submit">sign in</button>
+			</form>
+			<div class="link-container">
+			    <a th:href="@{/account/registerForm}">Click here to register</a>
+			</div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+    <header th:replace="~{layout :: account-header}"></header>
+    <main>
+        <h1>Sign In Fail</h1>
+        <p>Your username or your password is incorrect, please try again</p>
+        <div class="link-container">
+            <a th:href="@{/account/loginForm}">Try to login again</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

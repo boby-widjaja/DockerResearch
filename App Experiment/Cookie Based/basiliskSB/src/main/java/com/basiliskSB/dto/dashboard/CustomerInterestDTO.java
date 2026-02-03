@@ -1,0 +1,34 @@
+package com.basiliskSB.dto.dashboard;
+
+import com.basiliskSB.utility.MapperHelper;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.LinkedList;
+import java.util.List;
+
+@Getter
+@Setter
+public class CustomerInterestDTO {
+    private List<String> categoryNames = new LinkedList<>();
+    private List<Integer> totalQuantity = new LinkedList<>();
+
+    public CustomerInterestDTO(List<Object> data){
+        setCategoryNames(data);
+        setTotalQuantity(data);
+    }
+
+    private void setCategoryNames(List<Object> data){
+        for(var datum : data){
+            var categoryName = MapperHelper.getStringField(datum, 1);
+            categoryNames.add(categoryName);
+        }
+    }
+
+    private void setTotalQuantity(List<Object> data){
+        for(var datum : data){
+            var quantity = MapperHelper.getIntegerField(datum, 2);
+            totalQuantity.add(quantity);
+        }
+    }
+}

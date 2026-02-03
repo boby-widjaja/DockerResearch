@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="fail-container">
+		    <p>There is/are <span th:text="${dependencies}"></span> order detail(s) record found which are bought this product.</p>
+		    <p>You can't delete this product while those order detail(s) is/are dependent to this product.</p>
+		</div>
+		<a class="blue-button" th:href="@{/product/index}">back to index</a>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

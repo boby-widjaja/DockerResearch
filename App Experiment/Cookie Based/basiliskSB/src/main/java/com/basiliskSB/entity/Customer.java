@@ -1,0 +1,52 @@
+package com.basiliskSB.entity;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@Entity
+@Table(name="Customers")
+public class Customer {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="Id")
+	private Long id;
+	
+	@Column(name="CompanyName")
+	private String companyName;
+	
+	@Column(name="ContactPerson")	
+	private String contactPerson;
+	
+	@Column(name="Address")
+	private String address;
+	
+	@Column(name="City")
+	private String city;
+	
+	@Column(name="Phone")
+	private String phone;
+	
+	@Column(name="Email")
+	private String email;
+	
+	@Column(name="DeleteDate")
+	private LocalDateTime deleteDate;
+
+	@OneToMany(mappedBy="customer", fetch = FetchType.LAZY)
+	private List<Order> orders;
+
+	public Customer(Long id, String companyName, String contactPerson, String address, String city, String phone, String email) {
+		this.id = id;
+		this.companyName = companyName;
+		this.contactPerson = contactPerson;
+		this.address = address;
+		this.city = city;
+		this.phone = phone;
+		this.email = email;
+	}
+}

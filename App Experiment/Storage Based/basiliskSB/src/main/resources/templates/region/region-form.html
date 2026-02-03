@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<form method="post" class="upsert-form" th:action="@{/region/upsert}" th:object="${dto}">
+			<input type="hidden" th:field="*{id}"/>
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><label>Region City*</label></td>
+		                <td>
+		                	<input type="text" th:field="*{city}">
+		                	<div class="field-validation-error" th:errors="*{city}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td class="textarea-label"><label>Remark</label></td>
+		                <td>
+		                	<textarea th:field="*{remark}"></textarea>
+		                	<div class="field-validation-error" th:errors="*{remark}"></div>
+		                </td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    <button class="blue-button" type="submit" th:text="${type} + ' Region'"></button>
+		</form>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

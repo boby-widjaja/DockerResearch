@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="grid-container region-index">
+		    <form method="get" class="filter" th:action="@{/region/index}">
+		        <input type="text" name="city" placeholder="Region City..." th:attr="value=${city}">
+		        <button class="blue-button" type="submit">Search</button>
+		    </form>
+		    <a class="blue-button create-button" th:href="@{/region/upsertForm}">Insert New Region</a>
+			<table>
+				<th:block th:replace="~{layout :: tableHeader (${tableHeaders})}"></th:block>
+		        <tbody>
+					<tr th:each="row: ${grid}" th:object="${row}">
+						<td>
+							<a th:href="@{/region/upsertForm(id=*{id})}" class="blue-button update-button">Edit</a>
+							<a th:href="@{/region/delete(id=*{id})}" class="blue-button delete-button">Delete</a>
+							<a th:href="@{/region/detail(id=*{id})}" class="blue-button salesman-button">Salesmen</a>
+						</td>
+						<td th:text="*{city}"></td>
+						<td th:text="*{remark}"></td>
+					</tr>
+				</tbody>
+				<th:block th:replace="~{layout :: tableFooter (${columnSpan}, ${currentPage}, ${totalPages}, ${pageActionUrl}, ${pageUrlParameters})}"></th:block>
+			</table>
+		</div>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

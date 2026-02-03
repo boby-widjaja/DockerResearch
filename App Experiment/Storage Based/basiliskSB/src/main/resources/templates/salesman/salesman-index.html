@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="grid-container salesman-index">
+		    <form method="get" class="filter" th:action="@{/salesman/index}">
+		        <input type="text" name="employeeNumber" placeholder="Employee Number..." th:attr="value=${employeeNumber}">
+		        <input type="text" name="name" placeholder="Full Name..." th:attr="value=${name}">
+		        <select name="employeeLevel">
+		        	<option th:value=null>No Specific Level</option>
+			        <option th:each="option : ${employeeLevelDropdown}" th:attr="value=${option.value}"
+			        	th:text="${option.text}" th:selected="${option.value == employeeLevel}"></option>
+		        </select>
+		        <input type="text" name="superiorName" placeholder="Superior Name..." th:attr="value=${superiorName}">
+		        <button class="blue-button" type="submit">Search</button>
+		    </form>
+		    <a class="blue-button create-button" th:href="@{/salesman/upsertForm}">Insert New Salesman</a>
+			<table>
+				<th:block th:replace="~{layout :: tableHeader (${tableHeaders})}"></th:block>
+				<tbody>	
+					<tr th:each="row : ${grid}" th:object="${row}">
+						<td>
+							<a th:href="@{/salesman/upsertForm(employeeNumber=*{employeeNumber})}" class="blue-button update-button">Edit</a>
+							<a th:href="@{/salesman/delete(employeeNumber=*{employeeNumber})}" class="blue-button delete-button">Delete</a>
+							<a th:href="@{/salesman/detail(employeeNumber=*{employeeNumber})}" class="blue-button detail-button">Region</a>
+						</td>
+						<td th:text="*{employeeNumber}"></td>
+						<td th:text="*{fullName}"></td>
+						<td th:text="*{level}"></td>
+						<td th:text="*{superior}"></td>
+					</tr>
+				</tbody>
+				<th:block th:replace="~{layout :: tableFooter (${columnSpan}, ${currentPage}, ${totalPages}, ${pageActionUrl}, ${pageUrlParameters})}"></th:block>
+			</table>
+		</div>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>
