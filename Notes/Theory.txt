@@ -8,7 +8,6 @@ Contoh: VMware ESXi, Microsoft Hyper-V (Server mode), Xen, KVM (di Linux server)
 Hosted Hypervisor: Di install diatas OS lain.
 VirtualBox, VMware Workstation/Player, Parallels Desktop (Mac), Qemu
 
-
 Infrastructure / Platform Implementers & Operators Job Title:
 
 System Admin (Sys Admin)
@@ -137,3 +136,38 @@ Yang dibuat hanyalah:
 👉 pointer (label) baru ke image yang sama di disk.
 Ibarat:
 Satu file, tapi punya dua nama.
+
+Docker NAT (Network Address Translation)
+It is a networking mechanism that:
+rewrites destination IP/port so traffic can jump between different networks.
+
+Perbedaan container command stop dan kill.
+Container adalah linux process dan bisa dikendalikan oleh signal, contoh yang umum:
+| Signal       | Meaning                  | Can handle? |
+| ------------ | ------------------------ | ----------- |
+| SIGTERM (15) | Please terminate cleanly | ✅ yes       |
+| SIGINT (2)   | Interrupt (Ctrl+C)       | ✅ yes       |
+| SIGKILL (9)  | Die immediately          | ❌ no        |
+| SIGSTOP      | Pause                    | ❌ no        |
+
+Apa itu docker stop:
+1. Sends SIGTERM to main process (PID 1 in container)
+2. Waits (default 10 seconds)
+3. If still alive → sends SIGKILL
+
+SIGTERM akan membiarkan aplikasi:
+• close DB connections
+• flush logs
+• finish requests
+• shutdown safely
+
+Apa itu docker kill:
+1. Send SIGKILL langsung
+
+Bisa:
+❌ corrupt data
+❌ break transactions
+❌ leave files half-written
+
+Kalau kill itu kasar dan tidak best practice, di situasi apa harus dipakai?
+Not response dan di force stop

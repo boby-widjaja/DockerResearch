@@ -1,0 +1,50 @@
+-------------------------------- STEP 1: CREATE CONTAINER ---------------------------------------
+
+Buat container dengan options seperti di bawah ini:
+
+docker run -d --name sqlserver2022 -p 1433:1433 -e ACCEPT_EULA=Y -e SA_PASSWORD='SmithWessonMagnum357!' mcr.microsoft.com/mssql/server:2022-latest
+
+ACCEPT_EULA adalah accept terms and conditionnya
+SA_PASSWORD adalah initial password untuk first user dengan username: 'sa'
+
+-------------------------------- STEP 2: CREATE CONTAINER ---------------------------------------
+
+Akses lewat SSMS dengan:
+server name: localhost,1433
+username: sa
+password: SmithWessonMagnum357
+encryption: Trust Certificate
+
+-------------------------------- STEP 3: CREATE NEW USER ---------------------------------------
+
+Buat user baru lewat SSMS dengan:
+username: rootadmin
+password: nodecomplete
+uncheck password policy
+role: sysadmin
+
+-------------------------------- STEP 4: COPY BACKUP DB KE CONTAINER ---------------------------------------
+
+Masuk ke container dari sqlserver2022:
+docker exec -it -u root sqlserver2022 bash
+
+Dari dalam sqlserver container, buat satu folder / directory backup:
+mkdir backup
+
+Lalu pindahkan bak file ke dalam directory container:
+docker cp [origin path] sqlserver2022:/backup/BasiliskNext.bak
+docker cp AppExperiment/BasiliskNext.bak sqlserver2022:/backup/BasiliskNext.bak
+
+-------------------------------- STEP 5: RESTORE KE LINUX PATH ---------------------------------------
+
+Ketika restore, pastikan path Restore As directory pathnya di ubah, karena windows dan linux berbeda:
+
+dari:
+C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\
+jadi
+/var/opt/mssql/data/
+
+/var/opt/mssql/data/BasiliskNext.mdf
+/var/opt/mssql/data/BasiliskNext_log.ldf
+
+-------------------------------------------------------------
