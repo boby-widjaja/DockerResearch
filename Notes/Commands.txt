@@ -8,152 +8,6 @@ docker run hello-world
 docker run hello-world:latest
 (Pull ke image langsung sekaligus buat containernya dan menjalankannya)
 
-==================================== Image ==================================================
-
-Nge-check docker image:
-docker images
-docker image ls
-
-contoh narik images dari dockerhub:
-docker pull mongo:latest
-docker pull mcr.microsoft.com/mssql/server:2022-latest
-docker pull eclipse-temurin:21-jdk
-(bila kita tidak melakukan specific tag pada pull, dia akan ambil latest by default)
-(Tidak semua ada di docker hub official)
-
-bisa search tanpa website:
-docker search postgres
-docker search postgres --filter is-official=true (dengan filter official only)
-docker search postgres --filter stars=10 (dengan rate)
-docker search postgres -f is-official=true -f stars=10 
-
-Image tidak bisa dihapus selama masih dipakai container.
-Menghapus image
-docker image rm mongo:latest
-
-Kita juga bisa mengintip banyak hal, salah satunya container port dari database image dengan cara:
-docker image inspect mongo:latest
-
-Hasil jsonnya:
-[
-  {
-    "Config": {
-        "ExposedPorts": {
-            "27017/tcp": {}
-        }
-    }
-  }
-]
-
-port mongo: TCP 27017
-port postgres: TCP 5432
-port microsoft sql server: TCP 1433
-
-==================================== Container ==================================================
-
-check daftar container yang ada di local (running):
-docker ps
-docker container ls
-
-check daftar container yang ada di local (semua):
-docker ps --all
-docker container ls --all
-docker container ls -a
-
-Tampilin size sekalian:
-docker container ls --all --size
-docker container ls -a -s
-docker container ls -as
-
-Membuat mongo container dari existing images (ini nanti dikasih random name)
-docker container create mongo:latest
-
-Membuat mongo container dari existing images (ini diberi nama)
-docker container create --name mongoserver1 mongo:latest
-
-Contoh hasil container yang dibuat:
-CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS    PORTS     NAMES
-c5014123f081   mongo:latest   "docker-entrypoint.s…"   12 seconds ago   Created             mongoserver1
-
-Note: kita tidak bisa menciptakan container dengan nama yang sudah dipakai, unique kaya variable
-
-Contoh membuat 2 container dengan image yang sama:
-CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS    PORTS     NAMES
-6e313f9caeb3   mongo:latest   "docker-entrypoint.s…"   6 seconds ago   Created             mongoserver2
-c5014123f081   mongo:latest   "docker-entrypoint.s…"   5 minutes ago   Created             mongoserver1
-
-Contoh cara menjalankan existing container:
-docker container start mongoserver1
-
-Hasil setelah dijalankan:
-CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS       NAMES
-6e313f9caeb3   mongo:latest   "docker-entrypoint.s…"   2 minutes ago   Created                    mongoserver2
-c5014123f081   mongo:latest   "docker-entrypoint.s…"   7 minutes ago   Up 5 seconds   27017/tcp   mongoserver1
-
-run adalah command yang digunakan untuk melakukan
--pull image (apa bila image yang sesuai belum ditemukan)
--create container
--start container
-docker run mongo:latest
-docker run -d --name mongo_server1  mongo:latest
--d: artinya detached dari background process ketika container di run
---name: memberi nama pada containernya langsung
-
-Apa bila sedang running lognya, untuk melakukan detach, kita gunakan
-Ctrl + P   lalu   Ctrl + Q
-
-Contoh cara menghentikan existing container
-docker container stop mongoserver1
-
-stop sekaligus
-docker container stop mongoserver1 mongoserver2
-
-Always prefer stop over kill.
-kill = immediate force stop (can corrupt DB in rare cases)
-stop = graceful shutdown
-
-Untuk menghapus container:
-docker container rm mongoserver2
-
-Membuat docker container dengan settingan port:8080 yang bisa menggapinya di port 27017
-8080: host port
-27017: container port
-docker container create --name mongoserver1 -p 8080:27017 mongo:latest
-
-Membuka port yang sama ke public:
-docker container create --name app1 -p 8080:8080 app-golang:1.0
-
-(Note: Kita tidak bisa merubah port tanpa container re-creation
-Setelahnya port akan jadi immutable)
-
-Untuk melakukan restart:
-docker restart sqlserver2022
-(Tidak akan menghapus db dan lain-lainnya walau belum ada volume)
-
-Kita bisa melihat proses yang sedang berjalan di sebuah container dengan docker stop:
-docker top sqlserver2022
-
-UID (User ID): dijalankan oleh user linux yang mana.
-PID (Process ID): sama seperti process ID dari service.
-PPID (Parent Process ID): Terkadang service bisa bersifat hierarchy sehingga service bisa punya service lagi.
-C (CPU Usage): estimasi pemakaian CPU terakhir dalam score integer, makin besar makin sibuk.
-STIME (Start Time): jam proses ini mulai proses
-TTY (Teletypewriter): Terminal yang terhubung, ? menunjukan background process tidak terhubung ke terminal mana pun.
-TIME (CPU Time): Total durasi CPU bekerja untuk process ini.
-CMD (Command): Command yang dijalankan
-
-
-======================================== Manual Image dan HUB =============================================
-
--Build docker imge dari dockerfile. Diakhir itu titik berdasarkan lokasi dockerfilenya yang berada di directory yang sama.
-docker build --tag app-golang:1.0 .
-
-Membuat tag dari existing image:
-docker tag app-golang:1.0 bobywidjaja/app-golang:1.0
-(Yang depan nama imagenya dan tagnya, yang belakang nama tag baru yang sudah sesuai dengan ketentuan docker hub)
-
-docker push bobywidjaja/app-golang:1.0
-
 ======================================= ENVIRONMENT VARIABLE ==============================================
 
 Menciptakan container dengan ENVIRONMENT variable
@@ -176,9 +30,6 @@ docker container inspect app1
 		}
 	}
 ]
-
-Check log, contohnya di Spring Boot terminal: (setelah di start pastinya)
-docker container logs app1
 
 Multiple environment variables
 docker container create --name app3 -p 8084:8080 -e NAME=Docker -e APP=Java -e PASSWORD=rahasia app-golang:1.0
@@ -268,32 +119,6 @@ docker container create --name mongoserver1 -p 27017:27017
 
 /Users/Boby/Desktop/MyData adalah absolute path HDD saya.
 Posisinya persis menggantikan nama volume
-
-===================================== Masuk Container =============================================
-
-Kita bisa masuk ke dalam container untuk menjalankan sesuatu,
-contoh saja dibawah ini menjalankan redis dari dalam container:
-docker exec -t -i redisserver1 /bin/bash
-
--i   = interactive
--t   = pseudo terminal (TTY)
-
-Setelah itu kita bisa explore directorynya juga.
-
-Berikut ini contoh menjalankan CLI executable file nya jika memang ada.
-root@692129a4cf06:/usr/local/bin# ls
-docker-entrypoint.sh  redis-benchmark  redis-check-aof	redis-check-rdb  redis-cli  redis-sentinel  redis-server
-root@692129a4cf06:/usr/local/bin# type redis-cli
-redis-cli is /usr/local/bin/redis-cli
-root@692129a4cf06:/usr/local/bin# redis-cli
-127.0.0.1:6379> get boby
-(nil)
-127.0.0.1:6379> set boby OhmBob
-OK
-127.0.0.1:6379> get boby
-"OhmBob"
-127.0.0.1:6379> exit
-root@692129a4cf06:/usr/local/bin# 
 
 ===================================== Membersihkan sampah ==========================================
 

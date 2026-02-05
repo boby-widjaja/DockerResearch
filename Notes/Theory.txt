@@ -171,3 +171,71 @@ Bisa:
 
 Kalau kill itu kasar dan tidak best practice, di situasi apa harus dipakai?
 Not response dan di force stop
+
+============================== CONTAINER DIRECTORY SYSTEM ============================================
+
+📦 Container punya filesystem sendiri (seperti mini Linux)
+
+Saat image dibuat dan container dijalankan, Docker membuat:
+/
+├─ bin
+├─ etc
+├─ usr
+├─ var
+├─ app   ← ini nanti bisa kamu buat
+
+Ini bukan folder di Windows / Linux host kamu.
+Ini adalah filesystem virtual milik container.
+
+
+===================== EXEC vs SHELL FORM =====================================
+
+1. Exec form (JSON / array)
+CMD ["java", "-jar", "/app/demo-docker.jar"]
+
+Docker menjalankan program langsung.
+
+✅ Kelebihan
+
+✔ Aplikasi jadi PID 1 (langsung dikontrol Docker)
+✔ SIGTERM, SIGINT diterima dengan benar (graceful shutdown bekerja)
+✔ Tidak ada shell perantara
+✔ Lebih ringan & stabil
+✔ Standar untuk production
+
+❌ Kekurangan
+
+✖ Tidak ada shell features:
+tidak bisa &&
+tidak ada pipe |
+tidak ada $VAR expansion (kecuali ENTRYPOINT trick)
+
+2. Shell form
+CMD java -jar /app/demo-docker.jar
+
+Docker menjalankan:
+/bin/sh -c "java -jar /app/demo-docker.jar"
+
+✅ Kelebihan
+
+✔ Bisa pakai:
+environment variable ($PORT)
+chaining (&&)
+redirect (>)
+
+✔ Mudah untuk scripting cepat
+
+❌ Kekurangan (penting)
+❗ Aplikasi bukan PID 1
+❗ Signal sering tidak sampai ke aplikasi
+❗ docker stop bisa lambat / paksa kill
+❗ Risiko zombie process
+❗ Tidak ideal untuk service jangka panjang
+
+| Aspek           | Exec form    | Shell form       |
+| --------------- | ------------ | ---------------- |
+| PID 1           | App langsung | shell            |
+| Signal handling | ✅ bagus      | ❌ buruk          |
+| Performance     | lebih baik   | sedikit overhead |
+| Shell feature   | ❌            | ✅                |
+| Production use  | ⭐ yes        | ⚠️ rarely        |

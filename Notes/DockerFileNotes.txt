@@ -1,0 +1,162 @@
+======================================== Manual Image dan HUB =============================================
+
+-Build docker imge dari dockerfile. Diakhir itu titik berdasarkan lokasi dockerfilenya yang berada di directory yang sama.
+docker build --tag app-golang:1.0 .
+
+======================================== INSTRUCTION ======================================================
+
+seluruh operasi di docker file disebut INSTRUCTION, dan isinya ARGUMENT. (Processed in order)
+Macam-macam instruction:
+
+--------- FROM ----------
+
+FROM: kasih tau ambil imagenya darimana. Nama image dan tag sebagai argumentnya
+katanya akan secara otomatis juga terambil dari dockerhub seperti run. Remain to be tested
+FROM [--platform=<platform>] <image>[:<tag>] [AS <name>]
+FROM golang:1.25.6
+
+--------- LABEL ----------
+
+LABEL: Menambahkan metadata sesuka kita. Classic Key and Value Pair
+LABEL <key>=<value> [<key>=<value>...]
+LABEL maintainer="Boby"
+LABEL version="1.0"
+LABEL description="Backend API service"
+
+Di check dengan docker inspect
+"Config": {
+  "Labels": {
+    "maintainer": "Boby",
+    "version": "1.0",
+    "description": "Backend API service"
+  }
+}
+
+--------- WORKDIR ---------- 
+
+WORKDIR: set current working directory dari directory di dalam container yang nanti dibuat dari image.
+Apabila existing directory ditemukan, nah itu akan jadi working directory, tapi apabila tidak ditemukan, instruksi ini akan membuatkannya.
+
+Dengan begini, perintah RUN, CMD, ENTRYPOINT, COPY, ADD tidak perlu menulis path lebih panjang karena current working directorynya
+sudah di pindahkan.
+
+WORKDIR /path/to/workdir
+
+Tanpa WORKDIR:
+COPY app.jar /app/app.jar
+RUN java -jar /app/app.jar
+
+Dengan WORKDIR:
+WORKDIR /app
+COPY app.jar .
+RUN java -jar app.jar
+
+WORKDIR bisa dipakai berkali-kali, itu artinya working directorynya di set atau di update beberapa kali.
+Seperti global variable yang di set berkali-kali.
+
+--------- COPY & ADD ----------
+
+COPY: Mengcopy file dari directory kita ke directory hasil container, misalnya project file hasil build.
+Best practice classic.
+
+COPY [OPTIONS] <src> ... <dest>
+COPY [OPTIONS] ["<src>", ... "<dest>"]
+COPY main.go /app/main.go
+COPY file1.txt file2.txt /usr/src/things/
+
+ADD: Copy dengan Super Power.
+Seperti copy tapi bisa extract beberapa compression dan bahkan download file dari URL.
+Bahaya, unpredictable, hackable, please use COPY kalau gak necessary.
+
+Note: Path tidak boleh menggunakan ../../
+
+--------- RUN ----------
+
+RUN: adalah instruksi pembuat dan peng-update image, misalnya di project kita punya begitu banyak dependency, di sini kita bisa tarik dan install setiap dependency nya dulu.
+    RUN adalah murni command linux bash. Tapi tidak harus mengenai depency saja, bisa hal yang lain juga.
+    Jadi setelah complete image lahir, image tersebut bisa langsung siap digunakan.
+
+# Shell form:
+RUN <command> ...
+# Exec form:
+RUN [ "<command>", ... ]
+
+Contoh Shell Form:
+RUN apt update
+RUN npm install
+RUN echo "Hello World"
+
+Contoh Exec Form:
+RUN ["apt", "update"]
+RUN ["npm", "install"]
+RUN ["echo", "Hello World"]
+
+Untuk mengurangi ukuran image dan cache yang terlalu besar, satukan banyak command dibawah satu instruksi RUN, contoh:
+
+Contoh Buruk: (3 buah run, build image juga lama)
+RUN apt update
+RUN apt install -y curl
+RUN apt install -y git
+
+Contoh Baik:
+RUN apt update && apt install -y curl git
+atau
+RUN apt update \
+ && apt install -y curl \
+ && rm -rf /var/lib/apt/lists/*
+ 
+RUN akan di-rebuild jika ada layer sebelumnya yang berubah, hal ini bisa menyebabkan bahaya peristiwa RUN berulang yang mengakibatkan lambat.
+
+Jelek:
+FROM node:20
+
+COPY . .
+RUN npm install
+RUN npm run build
+
+Bagus:
+FROM node:20
+
+COPY package.json package-lock.json ./ (Perintah ini ada cachenya untuk specific file)
+RUN npm install (cuma diulang pada saat ada update package.json.)
+COPY . . (Perintah .. tidak ada cachenya, rusak cachenya)
+RUN npm run build (diulang terus kalau copy apa saja)
+
+--------- CMD ----------
+
+CMD: instruksi ini adalah default command yang dijalankan ketika container sudah di start.
+Terkecuali ada specific command yang dijalankan yang bisa override default command ini.
+
+Ada 3 bentuk argument pada CMD:
+CMD command param1 param2 (shell form)
+CMD ["executable","param1","param2"] (exec form)
+CMD ["param1","param2"] (exec form sebagai parameter default dari ENTRYPOINT instruction)
+
+CMD java -jar /app/demo-docker.jar
+CMD ["java", "-jar", "/app/demo-docker.jar"]
+
+ENTRYPOINT
+
+EXPOSE
+
+ENV
+
+USER 
+
+VOLUME
+
+ARG 
+
+ONBUILD
+
+=========================================
+
+HEALTHCHECK
+
+SHELL
+
+STOPSIGNAL
+
+====================== DEPRECATED ==========================
+
+MAINTAINER

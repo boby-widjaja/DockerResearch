@@ -32,7 +32,6 @@ Dari dalam sqlserver container, buat satu folder / directory backup:
 mkdir backup
 
 Lalu pindahkan bak file ke dalam directory container:
-docker cp [origin path] sqlserver2022:/backup/BasiliskNext.bak
 docker cp AppExperiment/BasiliskNext.bak sqlserver2022:/backup/BasiliskNext.bak
 
 -------------------------------- STEP 5: RESTORE KE LINUX PATH ---------------------------------------

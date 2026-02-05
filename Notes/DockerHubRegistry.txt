@@ -1,0 +1,7 @@
+========================================= DOCKER HUB REGISTRY =============================================
+
+Membuat tag dari existing image:
+docker tag app-golang:1.0 bobywidjaja/app-golang:1.0
+(Yang depan nama imagenya dan tagnya, yang belakang nama tag baru yang sudah sesuai dengan ketentuan docker hub)
+
+docker push bobywidjaja/app-golang:1.0

@@ -53,3 +53,5 @@ docker sbom?
 docker scout?
 
 Spring deployment dan Vue Deployment
+
+STDIN?
