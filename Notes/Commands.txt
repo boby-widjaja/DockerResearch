@@ -168,3 +168,6 @@ WARNING! This will remove:
   - all build cache
 
 (Note: Hati-hati penghapus volumes karena ada database di sana)
+
+jalankan java
+java -jar target/basiliskSB-5.0.0.jar

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<form method="post" class="upsert-form" th:action="@{/region/assignDetail}" th:object="${dto}">
+			<input type="hidden" th:field="*{regionId}"/>
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><label>Salesman*</label></td>
+		                <td>
+					        <select th:field="*{salesmanEmployeeNumber}">
+					        	<option th:value=null>No Specific Salesman</option>
+							    <option th:each="option : ${salesmanDropdown}" th:value="${option.value}"
+							    	th:text="${option.text}" th:selected="${option.value == salesmanEmployeeNumber}"/>
+					        </select>
+							<div class="field-validation-error" th:errors="*{salesmanEmployeeNumber}"></div>
+		                    <div class="field-validation-error" th:errors="${dto}"></div>
+		                </td>
+		            </tr>     
+		        </tbody>
+		    </table>
+		    <button class="blue-button" type="submit">Assign Salesman</button>
+		</form>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

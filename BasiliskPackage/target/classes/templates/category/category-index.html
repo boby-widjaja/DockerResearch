@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="grid-container category-index">
+		    <form method="get" class="filter" th:action="@{/category/index}">
+		        <input type="text" name="name" placeholder="Category Name..." th:attr="value=${name}">
+		        <button class="blue-button" type="submit">Search</button>
+		    </form>
+		    <a class="blue-button create-button" th:href="@{/category/upsertForm}">Insert New Category</a>
+			<table>
+		        <th:block th:replace="~{layout :: tableHeader (${tableHeaders})}"></th:block>
+		        <tbody>
+			        <tr th:each="row : ${grid}" th:object="${row}">
+						<td>
+							<a th:href="@{/category/upsertForm(id=*{id})}" class="blue-button update-button">Edit</a>
+							<a th:href="@{/category/delete(id=*{id})}" class="blue-button delete-button">Delete</a>
+						</td>
+						<td th:text="*{name}"></td>
+						<td th:text="*{description}"></td>
+					</tr>
+		        </tbody>
+				<th:block th:replace="~{layout :: tableFooter (${columnSpan}, ${currentPage}, ${totalPages}, ${pageActionUrl}, ${pageUrlParameters})}"></th:block>
+			</table>
+		</div>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

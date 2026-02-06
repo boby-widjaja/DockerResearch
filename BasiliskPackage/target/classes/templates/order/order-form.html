@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<form method="post" class="upsert-form" th:action="@{/order/upsert}"  th:object="${dto}">
+			<input type="hidden" th:field="*{invoiceNumber}">
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><label>Customer*</label></td>
+		                <td> 
+					        <select th:field="*{customerId}">
+					        	<option th:value=null>No Specific Customer</option>
+							    <option th:each="option : ${customerDropdown}" th:value="${option.value}"
+							    	th:text="${option.text}" th:selected="${option.value == customerId}"/>
+					        </select>
+		                    <div class="field-validation-error" th:errors="*{customerId}"></div>
+		                </td>
+		            </tr>   
+		            <tr>
+		                <td><label>Salesman*</label></td>
+		                <td>
+					        <select th:field="*{salesEmployeeNumber}">
+					        	<option th:value=null>No Specific Salesman</option>
+							    <option th:each="option : ${salesmanDropdown}" th:value="${option.value}"
+							    	th:text="${option.text}" th:selected="${option.value == salesEmployeeNumber}"/>
+					        </select>
+		                    <div class="field-validation-error" th:errors="*{salesEmployeeNumber}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		            	<td colspan=2 class="combined-validation">
+		            		<div class="field-validation-error" th:errors="${dto}"></div>
+		            	</td>
+		            </tr>     
+		            <tr>
+		                <td><label>Order Date*</label></td>
+		                <td>
+		                    <input type="date" th:field="*{orderDate}">
+		                	<div class="field-validation-error" th:errors="*{orderDate}"></div>
+		                </td>
+		            </tr>              
+		            <tr>
+		                <td><label>Shipped Date</label></td>
+		                <td>
+		                    <input type="date" th:field="*{shippedDate}">
+		                	<div class="field-validation-error" th:errors="*{shippedDate}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Due Date</label></td>
+		                <td>
+		                    <input type="date" th:field="*{dueDate}">
+		                	<div class="field-validation-error" th:errors="*{dueDate}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Delivery*</label></td>
+		                <td>
+					        <select th:field="*{deliveryId}">
+					        	<option th:value=null>No Specific Delivery</option>
+							    <option th:each="option : ${deliveryDropdown}" th:value="${option.value}"
+							    	th:text="${option.text}" th:selected="${option.value == categoryId}"/>
+					        </select>
+		                    <div class="field-validation-error" th:errors="*{deliveryId}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td class="textarea-label"><label>Destination Address*</label></td>
+		                <td>
+		                    <textarea th:field="*{destinationAddress}"></textarea>
+		                    <div class="field-validation-error" th:errors="*{destinationAddress}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Destination City*</label></td>
+		                <td>
+		                    <input type="text" th:field="*{destinationCity}">
+		                	<div class="field-validation-error" th:errors="*{destinationCity}"></div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Destination Postal Code*</label></td>
+		                <td>
+		                    <input type="text" th:field="*{destinationPostalCode}">
+		                	<div class="field-validation-error" th:errors="*{destinationPostalCode}"></div>
+		                </td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    <button class="blue-button" type="submit" th:text="${type} + ' Order'"></button>
+		</form>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="grid-container order-detail">
+			<section class="header-info" th:object="${parent}">
+		        <div>Invoice Number: <span th:text="*{invoiceNumber}"></span></div>
+		        <div>Customer Company: <span th:text="*{customer}"></span></div>
+		        <div>Sales Name: <span th:text="*{salesman}"></span></div>
+		        <div>Order Date: <span th:text="*{orderDate}"></span></div>
+		    </section>
+		    <a class="blue-button create-button" 
+		    	th:href="@{/order/upsertDetailForm(invoiceNumber=${parentId})}">Add New Detail</a>
+			<a class="blue-button" th:href="@{/order/generateInvoice(invoiceNumber=${parentId})}">Download Invoice</a>
+			<table>
+				<th:block th:replace="~{layout :: tableHeader (${tableHeaders})}"></th:block>
+		        <tbody>			
+					<tr th:each="orderDetail : ${grid}" th:object="${orderDetail}">
+						<td>
+							<a th:href="@{/order/upsertDetailForm(invoiceNumber=*{invoiceNumber}, productId=*{productId})}" class="blue-button">Edit</a>
+							<a th:href="@{/order/deleteDetail(invoiceNumber=*{invoiceNumber}, productId=*{productId})}" class="blue-button">Delete</a>
+						</td>
+						<td th:text="*{product}"></td>
+						<td th:text="${#numbers.formatCurrency(orderDetail.price)}"></td>
+						<td th:text="*{quantity}"></td>
+						<td th:text="*{discount}"></td>
+						<td th:text="${#numbers.formatCurrency(orderDetail.totalPrice)}"></td>
+					</tr>
+				</tbody>
+				<th:block th:replace="~{layout :: tableFooter (${columnSpan}, ${currentPage}, ${totalPages}, ${pageActionUrl}, ${pageUrlParameters})}"></th:block>
+			</table>
+		</div>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

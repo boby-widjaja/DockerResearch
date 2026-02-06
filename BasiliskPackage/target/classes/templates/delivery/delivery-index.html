@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="grid-container delivery-index">
+		    <form method="get" class="filter" th:action="@{/delivery/index}">
+		        <input type="text" name="company" placeholder="Company Name..." th:attr="value=${company}">
+		        <button class="blue-button" type="submit">Search</button>
+		    </form>
+		    <a class="blue-button create-button" th:href="@{/delivery/upsertForm}">Insert New Delivery</a>
+			<table>
+				<th:block th:replace="~{layout :: tableHeader (${tableHeaders})}"></th:block>
+				<tbody>		
+					<tr th:each="row: ${grid}" th:object="${row}">
+						<td>
+							<a th:href="@{/delivery/upsertForm(id=*{id})}" class="blue-button update-button">Edit</a>
+							<a th:href="@{/delivery/delete(id=*{id})}" class="blue-button delete-button">Delete</a>
+						</td>
+						<td th:text="*{companyName}"></td>
+						<td th:text="*{phone}"></td>
+						<td th:text="*{#numbers.formatCurrency(cost)}"></td>
+					</tr>
+				</tbody>
+				<th:block th:replace="~{layout :: tableFooter (${columnSpan}, ${currentPage}, ${totalPages}, ${pageActionUrl}, ${pageUrlParameters})}"></th:block>
+			</table>
+		</div>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

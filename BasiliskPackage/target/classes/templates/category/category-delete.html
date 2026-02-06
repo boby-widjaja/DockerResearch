@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+	<main>
+		<div class="fail-container">
+		    <p>There is/are <span th:text="${dependencies}"></span> product(s) found which are catagorized by this category.</p>
+		    <p>You can't delete this category while those product(s) is/are dependent to this category.</p>
+		</div>
+		<a class="blue-button" th:href="@{/category/index}">back to index</a>
+	</main>
+	<th:block th:replace="~{layout :: template (${breadCrumbs})}"></th:block>
+</body>
+</html>

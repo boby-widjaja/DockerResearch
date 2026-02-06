@@ -54,6 +54,26 @@ RUN java -jar app.jar
 WORKDIR bisa dipakai berkali-kali, itu artinya working directorynya di set atau di update beberapa kali.
 Seperti global variable yang di set berkali-kali.
 
+--------- ENV ----------
+
+ENV: instruksi yang digunakan untuk men-set environment variable.
+ENV <key>=<value> [<key>=<value>...]
+
+Satu per satu:
+ENV MY_NAME="John Doe"
+ENV MY_DOG=Rex\ The\ Dog
+ENV MY_CAT=fluffy
+
+atau sekaligus:
+ENV MY_NAME="John Doe" MY_DOG=Rex\ The\ Dog \
+    MY_CAT=fluffy
+
+Seharusnya di real production, environment variable di dalam docker tidak boleh menyimpan password,
+Env variable seperti db password harus dipakai hanya ketika dijalankan, atau di dalam docker compose atau di dalam secret manager.
+
+docker run -e DB_PASSWORD=supersecret myapp
+
+
 --------- COPY & ADD ----------
 
 COPY: Mengcopy file dari directory kita ke directory hasil container, misalnya project file hasil build.
@@ -135,17 +155,28 @@ CMD ["param1","param2"] (exec form sebagai parameter default dari ENTRYPOINT ins
 CMD java -jar /app/demo-docker.jar
 CMD ["java", "-jar", "/app/demo-docker.jar"]
 
+--------- ENTRYPOINT ----------
+
 ENTRYPOINT
 
-EXPOSE
+--------- EXPOSE ----------
 
-ENV
+EXPOSE: instruksi yang mengatur port number ketika menjalankan container. Ini seharusnya jadi container port, bukan host port, karena
+hostport nanti diberikan di opsi perintah create container.
+
+--------- USER ----------
 
 USER 
 
+--------- VOLUME ----------
+
 VOLUME
 
+--------- ARG ----------
+
 ARG 
+
+--------- ONBUILD ----------
 
 ONBUILD
 
