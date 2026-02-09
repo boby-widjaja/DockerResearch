@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, defineAsyncComponent } from 'vue'
 
 import './assets/css/normalize.css';
 import './assets/css/font-awesome.css';
@@ -9,34 +9,35 @@ import configureAxios from './axios-config';
 import { createPinia } from 'pinia';
 import VueApexCharts from "vue3-apexcharts";
 
-import BaseBooleanInput from './components/ui-element/BaseBooleanInput.vue';
-import BaseButton from './components/ui-element/BaseButton.vue';
-import BaseCard from './components/ui-element/BaseCard.vue';
-import BaseDateInput from './components/ui-element/BaseDateInput.vue';
-import BaseDateSearch from './components/ui-element/BaseDateSearch.vue';
-import BaseDecimalInput from './components/ui-element/BaseDecimalInput.vue';
-import BaseDetailLink from './components/ui-element/BaseDetailLink.vue';
-import BaseDiagramCard from './components/ui-element/BaseDiagramCard.vue';
-import BaseDialog from './components/ui-element/BaseDialog.vue';
-import BaseDropdownInput from './components/ui-element/BaseDropdownInput.vue';
-import BaseDropdownSearch from './components/ui-element/BaseDropdownSearch.vue';
-import BaseErrorDialog from './components/ui-element/BaseErrorDialog.vue';
-import BaseErrorContainer from './components/ui-element/BaseErrorContainer.vue';
-import BaseFileInput from './components/ui-element/BaseFileInput.vue';
-import BaseHeader from './components/ui-element/BaseHeader.vue';
-import BaseImageTile from './components/ui-element/BaseImageTile.vue';
-import BaseLogo from './components/ui-element/BaseLogo.vue';
-import BaseNumberInput from './components/ui-element/BaseNumberInput.vue';
-import BasePagination from './components/ui-element/BasePagination.vue';
-import BasePasswordInput from './components/ui-element/BasePasswordInput.vue';
-import BaseTable from './components/ui-element/BaseTable.vue';
-import BaseTextArea from './components/ui-element/BaseTextArea.vue';
-import BaseTextInput from './components/ui-element/BaseTextInput.vue';
-import BaseTextSearch from './components/ui-element/BaseTextSearch.vue';
-import BaseTileContainer from './components/ui-element/BaseTileContainer.vue';
-import BaseUpdateDelete from './components/ui-element/BaseUpdateDelete.vue';
-import BaseValidationMessage from './components/ui-element/BaseValidationMessage.vue';
-import BaseWarningNote from './components/ui-element/BaseWarningNote.vue';
+const BaseBooleanInput = defineAsyncComponent(() => import('./components/ui-element/BaseBooleanInput.vue'));
+const BaseButton = defineAsyncComponent(() => import('./components/ui-element/BaseButton.vue'));
+const BaseCard = defineAsyncComponent(() => import('./components/ui-element/BaseCard.vue'));
+const BaseDateInput = defineAsyncComponent(() => import('./components/ui-element/BaseDateInput.vue'));
+const BaseDateSearch = defineAsyncComponent(() => import('./components/ui-element/BaseDateSearch.vue'));
+const BaseDecimalInput = defineAsyncComponent(() => import('./components/ui-element/BaseDecimalInput.vue'));
+const BaseDetailLink = defineAsyncComponent(() => import('./components/ui-element/BaseDetailLink.vue'));
+const BaseDiagramCard = defineAsyncComponent(() => import('./components/ui-element/BaseDiagramCard.vue'));
+const BaseDialog = defineAsyncComponent(() => import('./components/ui-element/BaseDialog.vue'));
+const BaseDropdownInput = defineAsyncComponent(() => import('./components/ui-element/BaseDropdownInput.vue'));
+const BaseDropdownSearch = defineAsyncComponent(() => import('./components/ui-element/BaseDropdownSearch.vue'));
+const BaseErrorDialog = defineAsyncComponent(() => import('./components/ui-element/BaseErrorDialog.vue'));
+const BaseErrorContainer = defineAsyncComponent(() => import('./components/ui-element/BaseErrorContainer.vue'));
+const BaseFileInput = defineAsyncComponent(() => import('./components/ui-element/BaseFileInput.vue'));
+const BaseHeader = defineAsyncComponent(() => import('./components/ui-element/BaseHeader.vue'));
+const BaseImageTile = defineAsyncComponent(() => import('./components/ui-element/BaseImageTile.vue'));
+const BaseLogo = defineAsyncComponent(() => import('./components/ui-element/BaseLogo.vue'));
+const BaseNumberInput = defineAsyncComponent(() => import('./components/ui-element/BaseNumberInput.vue'));
+const BasePagination = defineAsyncComponent(() => import('./components/ui-element/BasePagination.vue'));
+const BasePasswordInput = defineAsyncComponent(() => import('./components/ui-element/BasePasswordInput.vue'));
+const BaseTable = defineAsyncComponent(() => import('./components/ui-element/BaseTable.vue'));
+const BaseTextArea = defineAsyncComponent(() => import('./components/ui-element/BaseTextArea.vue'));
+const BaseTextInput = defineAsyncComponent(() => import('./components/ui-element/BaseTextInput.vue'));
+const BaseTextSearch = defineAsyncComponent(() => import('./components/ui-element/BaseTextSearch.vue'));
+const BaseTileContainer = defineAsyncComponent(() => import('./components/ui-element/BaseTileContainer.vue'));
+const BaseUpdateDelete = defineAsyncComponent(() => import('./components/ui-element/BaseUpdateDelete.vue'));
+const BaseValidationMessage = defineAsyncComponent(() => import('./components/ui-element/BaseValidationMessage.vue'));
+const BaseWarningNote = defineAsyncComponent(() => import('./components/ui-element/BaseWarningNote.vue'));
+
 
 let app = createApp(App);
 const pinia = createPinia();

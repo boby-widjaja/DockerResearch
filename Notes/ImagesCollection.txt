@@ -1,0 +1,10 @@
+IMAGE                                        ID             DISK USAGE   CONTENT SIZE   EXTRA
+alpine:latest                                25109184c71b       13.1MB         3.95MB        
+basilisk_sb:1.0                              1002855ee41f        456MB          156MB    U   
+eclipse-temurin:21-jdk                       e8d57b6c5c73        679MB          214MB        
+eclipse-temurin:21-jre-alpine                6ad8ed080d9b        286MB         74.8MB        
+mcr.microsoft.com/mssql/server:2022-latest   0ec7739e1c5e       2.25GB          600MB    U   
+mongo:latest                                 6f55a078e025       1.27GB          333MB        
+nginx:alpine                                 1d13701a5f9f       93.4MB         26.9MB        
+node:22-alpine                               e4bf2a82ad0a        230MB         57.1MB        
+postgres:latest                              f42fe58fa146        649MB          168MB   
