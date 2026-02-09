@@ -1,0 +1,49 @@
+-------------------------------- STEP 1: CARI IMAGE JAVA ---------------------------------------
+
+Bila kalian mengharap Docker ikut Build app, berarti kita butuh: (Butuh Development Kit)
+eclipse-temurin:21-jdk 
+Bila kalian hanya ingin menjalankan hasil build app: (Cukup Run Time Environment)
+eclipse-temurin:21-jre-alpine
+
+-------------------------------- STEP 2: APP PROPERTIES ---------------------------------------
+
+Atur application.properties dari project.
+ganti value-value yang kamu rasa harus diberi Environment Variable, seperti di bawah ini
+info.app.name=${APP_NAME}
+
+Domain atau Ip dari database atau apapun itu yang connect ke aplikasi server-side kita ini akan diganti dengan nama container.
+
+Environment Variable harus menggunakan SCREAMING_CASE atau orang suka sebut uppercase snake case.
+
+-------------------------------- STEP 3: ATUR STATIC SOURCES (MVC only) ---------------------------------------
+
+Jika kita merubah struktur folder dari static files, kita harus merubahnya dengan cara seperti ini pada MVC Configuration.
+@Override
+public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/resources/**")
+        .addResourceLocations("classpath:/static/resources/");
+}
+    
+-------------------------------- STEP 4: BUILD APP dengan IntelliJ IDE ---------------------------------------
+
+Buka menu Maven di sebelah kiri, clear terlebih dahulu dan pastikan folder target sudah hilang.
+
+Lalu pada menu Maven pilih install, dia akan membuatkan target folder yang baru.
+
+Coba run dengan menggunakan jar file dan environment variable yang kalian input dengan menggunakan Edit Configuration Running Menu.
+- File App (pojok kanan atas) > Edit Configurations
+atau
+- Main Menu > Run > Edit Configurations
+
+-------------------------------- STEP 5: Docker File ---------------------------------------
+
+Copy target folder beserta isinya ke satu directory.
+Pada Root Directory itu buatlah Dockerfile sesuai contoh.
+
+-------------------------------- STEP 6: Build Image from Dockerfile ---------------------------------------
+
+Build dengan perintah:
+docker build --tag basilisk_sb:1.0 .
+
+opsi tag memiliki argument basilisk_sb
+build sendiri menerima parameter berupa (.) ini menunjukan roo directory.

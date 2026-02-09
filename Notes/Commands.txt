@@ -62,6 +62,8 @@ docker network connect golang_network app1
 docker network connect golang_network mongoserver1
 
 Setelah itu, network bisa di check lewat inspect command, dan hasilnya:
+docker network inspect golang_network
+docker container inpect app1
 "Networks": {
     "golang_network": {...}
 }

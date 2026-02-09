@@ -2,11 +2,25 @@
 
 -Build docker imge dari dockerfile. Diakhir itu titik berdasarkan lokasi dockerfilenya yang berada di directory yang sama.
 docker build --tag app-golang:1.0 .
+docker build --tag basilisk_sb:1.0 .
 
 ======================================== INSTRUCTION ======================================================
 
 seluruh operasi di docker file disebut INSTRUCTION, dan isinya ARGUMENT. (Processed in order)
 Macam-macam instruction:
+
+1. FROM 
+2. LABEL
+3. ENV
+4. WORKDIR
+5. COPY / ADD
+6. RUN
+7. EXPOSE
+8. USER
+9. ENTRYPOINT
+10. CMD
+
+FLEW CAR EUEC
 
 --------- FROM ----------
 
@@ -32,6 +46,25 @@ Di check dengan docker inspect
   }
 }
 
+--------- ENV ----------
+
+ENV: instruksi yang digunakan untuk men-set environment variable.
+ENV <key>=<value> [<key>=<value>...]
+
+Satu per satu:
+ENV MY_NAME="John Doe"
+ENV MY_DOG=Rex\ The\ Dog
+ENV MY_CAT=fluffy
+
+atau sekaligus:
+ENV MY_NAME="John Doe" MY_DOG=Rex\ The\ Dog \
+    MY_CAT=fluffy
+
+Seharusnya di real production, environment variable di dalam docker tidak boleh menyimpan password,
+Env variable seperti db password harus dipakai hanya ketika dijalankan, atau di dalam docker compose atau di dalam secret manager.
+
+docker run -e DB_PASSWORD=supersecret myapp
+
 --------- WORKDIR ---------- 
 
 WORKDIR: set current working directory dari directory di dalam container yang nanti dibuat dari image.
@@ -53,25 +86,6 @@ RUN java -jar app.jar
 
 WORKDIR bisa dipakai berkali-kali, itu artinya working directorynya di set atau di update beberapa kali.
 Seperti global variable yang di set berkali-kali.
-
---------- ENV ----------
-
-ENV: instruksi yang digunakan untuk men-set environment variable.
-ENV <key>=<value> [<key>=<value>...]
-
-Satu per satu:
-ENV MY_NAME="John Doe"
-ENV MY_DOG=Rex\ The\ Dog
-ENV MY_CAT=fluffy
-
-atau sekaligus:
-ENV MY_NAME="John Doe" MY_DOG=Rex\ The\ Dog \
-    MY_CAT=fluffy
-
-Seharusnya di real production, environment variable di dalam docker tidak boleh menyimpan password,
-Env variable seperti db password harus dipakai hanya ketika dijalankan, atau di dalam docker compose atau di dalam secret manager.
-
-docker run -e DB_PASSWORD=supersecret myapp
 
 
 --------- COPY & ADD ----------
@@ -142,10 +156,48 @@ RUN npm install (cuma diulang pada saat ada update package.json.)
 COPY . . (Perintah .. tidak ada cachenya, rusak cachenya)
 RUN npm run build (diulang terus kalau copy apa saja)
 
+--------- EXPOSE ----------
+
+EXPOSE: instruksi yang mengatur port number ketika menjalankan container. Ini seharusnya jadi container port, bukan host port, karena
+hostport nanti diberikan di opsi perintah create container.
+
+EXPOSE <port> [<port>/<protocol>...]
+
+EXPOSE 8080
+EXPOSE 8080/tcp
+
+Note: docker tidak kenal beberapa protocol aplikasi seperti http, smtp, ftp, dan lain-lain
+
+Note: tujuan dari expose hanya dokumentasi, dia tidak akan membuka port tersebut ke host. untuk membukanya tetap harus menggunakan -p.
+Tetapi kita bisa menggunakan dokumentasi EXPOSE untuk digabung dengan -p, yaitu gunakan huruf besar -P
+
+--------- ENTRYPOINT ----------
+
+ENTRYPOINT: dia mirip sebenarnya seperti CMD, tetapi dia adalah perintah tetap yang tidak bisa di override.
+lain dengan CMD yang total perintah dan argumentnya bisa di override.
+
+FROM ubuntu
+CMD ["echo", "Hello"]
+docker run image >> Hello
+docker run image echo World >> World
+
+FROM ubuntu
+ENTRYPOINT ["echo", "Hello"]
+docker run image >> Hello
+docker run image echo World >> Hello World
+
+Best Practice:
+FROM ubuntu
+ENTRYPOINT ["echo"]
+CMD ["Hello"]
+
+CMD menjadi default parameter
+
 --------- CMD ----------
 
 CMD: instruksi ini adalah default command yang dijalankan ketika container sudah di start.
 Terkecuali ada specific command yang dijalankan yang bisa override default command ini.
+Bagian perintah dari CMD bisa di override.
 
 Ada 3 bentuk argument pada CMD:
 CMD command param1 param2 (shell form)
@@ -155,18 +207,23 @@ CMD ["param1","param2"] (exec form sebagai parameter default dari ENTRYPOINT ins
 CMD java -jar /app/demo-docker.jar
 CMD ["java", "-jar", "/app/demo-docker.jar"]
 
---------- ENTRYPOINT ----------
-
-ENTRYPOINT
-
---------- EXPOSE ----------
-
-EXPOSE: instruksi yang mengatur port number ketika menjalankan container. Ini seharusnya jadi container port, bukan host port, karena
-hostport nanti diberikan di opsi perintah create container.
-
 --------- USER ----------
 
-USER 
+USER: menentukan user dan group yang dipakai saat container dijalankan
+Ini kaitannya nanti dengan security dan authorization.
+Default usernya adalah root bila tidak ditulis:
+
+Kalau kamu tidak menulis USER, maka:
+Proses di dalam container = root
+UID = 0
+Sama seperti sudo di Linux
+
+USER appuser
+USER UID 
+USER appuser:appgroup
+
+USER Boby
+USER 10001
 
 --------- VOLUME ----------
 

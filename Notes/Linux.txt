@@ -26,3 +26,6 @@ Updating metadata ensures:
 ✅ dependency graph is correct
 ✅ fewer errors
 ------------------------------------------------------------------------
+
+Check username saya:
+whoami
