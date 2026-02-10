@@ -1,0 +1,3 @@
+docker build -t m1lk/cowsay:v1 .
+docker run -it --rm --name mycowsay m1lk/cowsay:v1
+docker run -it --name mycowsay1 m1lk/cowsay:v1 Test dengan text lain

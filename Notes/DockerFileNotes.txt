@@ -9,18 +9,39 @@ docker build --tag basilisk_sb:1.0 .
 seluruh operasi di docker file disebut INSTRUCTION, dan isinya ARGUMENT. (Processed in order)
 Macam-macam instruction:
 
-1. FROM 
-2. LABEL
-3. ENV
-4. WORKDIR
-5. COPY / ADD
-6. RUN
-7. EXPOSE
-8. USER
-9. ENTRYPOINT
-10. CMD
+1. ARG
+2. FROM 
+3. LABEL
+4. ENV
+5. WORKDIR
+6. COPY / ADD
+7. RUN
+8. EXPOSE
+9. USER
+10. VOLUME
+11. ENTRYPOINT
+12. CMD
 
-FLEW CAR EUEC
+
+A FLEW CAR EUVEC
+
+--------- ARG ----------
+
+ARG: instruksi yang digunakan untuk membuat parameter / untuk argument yang masuk ketika process build sendiri.
+ARG <name>[=<default value>]
+
+FROM busybox
+ARG user1
+ARG buildno
+# ...
+
+Dengan default value:
+FROM busybox
+ARG user1=someuser
+ARG buildno=1
+# ...
+
+docker build --build-arg username=what_user .
 
 --------- FROM ----------
 
@@ -171,6 +192,30 @@ Note: docker tidak kenal beberapa protocol aplikasi seperti http, smtp, ftp, dan
 Note: tujuan dari expose hanya dokumentasi, dia tidak akan membuka port tersebut ke host. untuk membukanya tetap harus menggunakan -p.
 Tetapi kita bisa menggunakan dokumentasi EXPOSE untuk digabung dengan -p, yaitu gunakan huruf besar -P
 
+--------- USER ----------
+
+USER: menentukan user dan group yang dipakai saat container dijalankan
+Ini kaitannya nanti dengan security dan authorization.
+Default usernya adalah root bila tidak ditulis:
+
+Kalau kamu tidak menulis USER, maka:
+Proses di dalam container = root
+UID = 0
+Sama seperti sudo di Linux
+
+USER appuser
+USER UID 
+USER appuser:appgroup
+
+USER Boby
+USER 10001
+
+--------- VOLUME ----------
+
+VOLUME hanya untuk dokumentasi path dari persistent data yang akan dibuatkan volume.
+VOLUME ["/data"]
+VOLUME ["/var/opt/mssql"]
+
 --------- ENTRYPOINT ----------
 
 ENTRYPOINT: dia mirip sebenarnya seperti CMD, tetapi dia adalah perintah tetap yang tidak bisa di override.
@@ -207,35 +252,10 @@ CMD ["param1","param2"] (exec form sebagai parameter default dari ENTRYPOINT ins
 CMD java -jar /app/demo-docker.jar
 CMD ["java", "-jar", "/app/demo-docker.jar"]
 
---------- USER ----------
-
-USER: menentukan user dan group yang dipakai saat container dijalankan
-Ini kaitannya nanti dengan security dan authorization.
-Default usernya adalah root bila tidak ditulis:
-
-Kalau kamu tidak menulis USER, maka:
-Proses di dalam container = root
-UID = 0
-Sama seperti sudo di Linux
-
-USER appuser
-USER UID 
-USER appuser:appgroup
-
-USER Boby
-USER 10001
-
---------- VOLUME ----------
-
-VOLUME
-
---------- ARG ----------
-
-ARG 
 
 --------- ONBUILD ----------
 
-ONBUILD
+ONBUILD: instruksi yang berisi perintah yang dijalankan pada saat image hasil ciptaan Dockerfile ini digunakan oleh Dockerfile lain di dalam FROM instruction.
 
 =========================================
 
@@ -244,7 +264,3 @@ HEALTHCHECK
 SHELL
 
 STOPSIGNAL
-
-====================== DEPRECATED ==========================
-
-MAINTAINER

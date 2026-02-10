@@ -1,0 +1,2 @@
+docker build -t m1lk/fortune:v1 .
+docker run -it --rm --name fortune1 m1lk/fortune:v1
