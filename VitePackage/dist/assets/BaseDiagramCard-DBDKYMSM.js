@@ -1,0 +1,1 @@
+import{_ as s,c as r,a,t as o,r as d,o as c}from"./index-DORZQaw3.js";const l={class:"base-diagram-card"},n={__name:"BaseDiagramCard",props:["title"],setup(e){return(t,i)=>(c(),r("div",l,[a("h1",null,o(e.title),1),a("div",null,[d(t.$slots,"default",{},void 0,!0)])]))}},p=s(n,[["__scopeId","data-v-df4df162"]]);export{p as default};

@@ -1,0 +1,1 @@
+import{_ as t,c as a,o as c}from"./index-DORZQaw3.js";const s=["placeholder"],o={__name:"BaseTextSearch",props:["placeholder"],setup(e){return(r,l)=>(c(),a("input",{class:"base-text-search",type:"text",placeholder:e.placeholder},null,8,s))}},_=t(o,[["__scopeId","data-v-28f1fc50"]]);export{_ as default};

@@ -1,0 +1,1 @@
+import{_ as e,c as t,a as o,o as a}from"./index-DORZQaw3.js";const c="/assets/logo-BdYIt80Z.png",n={},r={class:"base-logo"};function _(l,s){return a(),t("div",r,s[0]||(s[0]=[o("img",{src:c},null,-1),o("h1",null,"Basilisk",-1)]))}const i=e(n,[["render",_],["__scopeId","data-v-1d44374b"]]);export{i as default};

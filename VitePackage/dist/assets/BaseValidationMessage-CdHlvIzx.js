@@ -1,0 +1,1 @@
+import{_ as t,c as n,a,r as o,o as l}from"./index-DORZQaw3.js";const r={},c={class:"base-validation-message"};function d(s,e){return l(),n("div",c,[e[0]||(e[0]=a("i",{class:"fas fa-exclamation-circle"},null,-1)),a("span",null,[o(s.$slots,"default",{},void 0,!0)])])}const f=t(r,[["render",d],["__scopeId","data-v-0303aa2d"]]);export{f as default};

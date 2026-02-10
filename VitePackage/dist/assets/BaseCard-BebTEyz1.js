@@ -1,0 +1,1 @@
+import{_ as s,c as a,r,o as t}from"./index-DORZQaw3.js";const c={},o={class:"base-card"};function n(e,d){return t(),a("div",o,[r(e.$slots,"default",{},void 0,!0)])}const f=s(c,[["render",n],["__scopeId","data-v-66e90bf6"]]);export{f as default};

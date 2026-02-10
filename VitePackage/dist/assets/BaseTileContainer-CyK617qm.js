@@ -1,0 +1,1 @@
+import{_ as s,c as t,r as o,o as n}from"./index-DORZQaw3.js";const r={},a={class:"base-tile-container"};function c(e,l){return n(),t("div",a,[o(e.$slots,"default")])}const i=s(r,[["render",c]]);export{i as default};

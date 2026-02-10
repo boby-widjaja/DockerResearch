@@ -1,9 +1,12 @@
 import axios from 'axios';
 import useStore from './store/auth/auth-store.js';
 
+const domain = import.meta.env.VITE_SERVER_DOMAIN;
+const port = import.meta.env.VITE_SERVER_PORT;
+
 export default function configure(router){
     const store = useStore();
-    axios.defaults.baseURL = 'http://localhost:7070/api';
+    axios.defaults.baseURL = `http://${domain}:${port}/api`;
 
     const isOk = status => status >= 200 && status <= 299;
     const isRedirected = status => status >= 300 && status <= 399;

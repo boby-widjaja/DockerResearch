@@ -1,0 +1,1 @@
+import{_ as o,c as t,a as s,r as a,o as d}from"./index-DORZQaw3.js";const c={},r={class:"base-header"},n={class:"label"},l={class:"value"};function _(e,i){return d(),t("div",r,[s("div",n,[a(e.$slots,"label",{},void 0,!0)]),s("div",l,[a(e.$slots,"value",{},void 0,!0)])])}const u=o(c,[["render",_],["__scopeId","data-v-4f74d350"]]);export{u as default};

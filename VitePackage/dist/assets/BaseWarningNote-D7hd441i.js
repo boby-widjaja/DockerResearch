@@ -1,0 +1,1 @@
+import{_ as n,c as t,a as e,r as o,o as r}from"./index-DORZQaw3.js";const c={},l={class:"base-warning-note"};function i(s,a){return r(),t("div",l,[a[0]||(a[0]=e("div",{class:"title"},[e("i",{class:"fas fa-exclamation-triangle"}),e("span",null,"Warning")],-1)),o(s.$slots,"default",{},void 0,!0)])}const f=n(c,[["render",i],["__scopeId","data-v-4038c66a"]]);export{f as default};

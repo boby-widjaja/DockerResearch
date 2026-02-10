@@ -1,0 +1,1 @@
+import{_ as e,c as a,o as t}from"./index-DORZQaw3.js";const c={},s={class:"base-date-search",type:"date"};function o(r,_){return t(),a("input",s)}const d=e(c,[["render",o],["__scopeId","data-v-a7544b48"]]);export{d as default};

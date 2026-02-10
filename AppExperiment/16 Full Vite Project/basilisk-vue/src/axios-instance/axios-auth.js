@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const domain = import.meta.env.VITE_SERVER_DOMAIN;
+const port = import.meta.env.VITE_SERVER_PORT;
+
 const instance = axios.create();
-instance.defaults.baseURL = 'http://localhost:7070/api/account';
+instance.defaults.baseURL = `http://${domain}:${port}/api/account`;
 delete instance.defaults.headers.common.Authorization;
 
 const isOk = status => status >= 200 && status <= 299;
