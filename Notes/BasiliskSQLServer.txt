@@ -7,6 +7,15 @@ docker run -d --name sqlserver2022 -p 1433:1433 -e ACCEPT_EULA=Y -e SA_PASSWORD=
 ACCEPT_EULA adalah accept terms and conditionnya
 SA_PASSWORD adalah initial password untuk first user dengan username: 'sa'
 
+with volume:
+docker run -d \
+    --name sqlserver2022 \
+    -p 1433:1433 \
+    -e ACCEPT_EULA=Y \
+    -e SA_PASSWORD='SmithWessonMagnum357!' \
+    -v sqlserver2022_volume:/var/opt/mssql \
+    mcr.microsoft.com/mssql/server:2022-latest
+
 -------------------------------- STEP 2: CREATE CONTAINER ---------------------------------------
 
 Akses lewat SSMS dengan:
