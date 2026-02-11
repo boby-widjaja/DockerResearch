@@ -1,0 +1,4 @@
+docker build --tag static_web:1.0 .
+docker container create --name hello_web -p 80:80 static_web:1.0
+
+dockerignore cuekin directory atau file yang memang tidak mau ikut kena build
