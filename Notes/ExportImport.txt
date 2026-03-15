@@ -1,0 +1,15 @@
+Biasanya dipakai ketika ingin menyalin isi container tanpa membawa metadata Docker seperti layer image, history, atau konfigurasi image.
+
+$ docker export basilisk_server_ns > basilisk_server_ns.tar
+
+docker export tidak menyimpan:
+    -history image
+    -layer Docker
+    -metadata image
+    -environment variable
+    -command (CMD, ENTRYPOINT)
+    -konfigurasi network
+    Jadi hasilnya hanya filesystem saja.
+
+Untuk import ke image baru
+docker import basilisk_server_ns.tar basilisk_import:1.0
